@@ -1,3 +1,40 @@
 NAME             TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
 events-api-svc   ClusterIP   10.111.195.113   <none>        8082/TCP   13s
 kubernetes       ClusterIP   10.96.0.1        <none>        443/TCP    20h
+
+
+
+NAME                TYPE           CLUSTER-IP       EXTERNAL-IP      PORT(S)        AGE
+autoscale-app-svc   LoadBalancer   10.97.203.177    10.97.203.177    80:32446/TCP   2m10s
+events-api-svc      ClusterIP      10.111.195.113   <none>           8082/TCP       115m
+events-web-svc      LoadBalancer   10.107.173.129   10.107.173.129   80:32604/TCP   110m
+kubernetes          ClusterIP      10.96.0.1        <none>           443/TCP        22h
+
+
+NAME                             READY   STATUS    RESTARTS      AGE
+autoscale-app-5d7c84497b-6f6hx   1/1     Running   0             11m
+autoscale-app-5d7c84497b-bnd9w   1/1     Running   0             11m
+events-api-797889c7d7-4xnqn      1/1     Running   2 (19m ago)   175m
+events-web-775d4b8cc6-gkxfh      1/1     Running   1 (19m ago)   105m
+
+while true; do curl http://10.97.203.177/; done;
+
+
+
+
+
+NAME             TYPE           CLUSTER-IP       EXTERNAL-IP      PORT(S)        AGE
+events-api-svc   ClusterIP      10.111.195.113   <none>           8082/TCP       159m
+events-web-svc   LoadBalancer   10.107.173.129   10.107.173.129   80:32604/TCP   154m
+kubernetes       ClusterIP      10.96.0.1        <none>           443/TCP        23h
+
+while true; do curl -s http://10.107.173.129/ | grep -s Welcome; sleep 1; done;
+
+
+
+
+docker build -t cesarmmk8s/events-job:v1.0 .
+docker push cesarmmk8s/events-job:v1.0
+
+
+helm install database-server oci://registry-1.docker.io/cloudpirates/mariadb

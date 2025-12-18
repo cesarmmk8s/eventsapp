@@ -1,0 +1,10 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-all-egress
+  namespace: test
+spec:
+  podSelector: {}     # selects all pods in the test namespace
+  policyTypes:
+    - Egress
+  egress: []          # no egress allowed

@@ -1,0 +1,12 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: deny-from-other-namespaces
+  namespace: default
+spec:
+  podSelector: {}            # selects all pods in default
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector: {}    # allow from any pod in the same namespace only
